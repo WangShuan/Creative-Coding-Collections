@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Coding Collections</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+  <style>
+    .hover-profile{
+      position: relative;
+      display: block;
+    }
+    .hover-profile::before{
+      opacity: 0;
+      transition: all .5s;
+      content: "SEE MORE";
+      font-size: 20px;
+      font-weight: bold;
+      color: #808080;
+      text-shadow: 2px 2px 2px #fff;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffffaa;
+    }
+    .hover-profile:hover::before{
+      opacity: 1;
+    }
+    @media all and (max-width: 768px){
+      .hover-profile::before{
+        opacity: 1;
+      font-size: 16px;
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container my-5">
+    <section class="text-center p-5 bg-dark my-5">
+      <h1 class="mb-3 text-white">Creative Coding Collections by Wang Shuan</h1>
+      <p class="fs-6 text-light">
+        Hello ~ 我是萱😊 是一名非本科轉職的前端工程師！<br>
+        因受全端工程師的老公影響，開始研究網頁前端技術，目前已累積兩年前端工作經驗，準備轉型為自由接案者。<br>
+        現在的網頁技術推陳出新，期盼自己可以透過更豐富、具有互動性的作品來增加使用者體驗，因而開始學習『互動藝術程式創作』。<br>
+        該頁面皆是我於學習過程中逐漸獨立完成的作品，歡迎點擊並前往瀏覽網站，如有任何建議也歡迎來信指教 ~<br>
+      </p>
+    </section>
+    <div class="row g-5 align-items-end justify-content-center">
+
+      <div class="col-md-5">
+        <h2 class="fs-3 mb-3">
+          <span class="text-muted fs-6">01 - 製作揮灑的彩色滑鼠筆刷</span><br>
+          Mix Circle
+        </h2>
+        <p class="fs-6">
+          作品概述：<br>
+          初次接觸 P5.js，參考了教材中提供的 <a class="link-dark" href="https://openprocessing.org/sketch/595598" target="_blank">Rotary Brush (OpenProcessing)</a> 作品進行延伸應用。
+          剛開始製作時利用各種配色 mix 出來的圖不是很理想，所以最後決定改用灰黑白來實現。
+          <br><br>
+          操作說明：<br>
+          可使用滑鼠點擊並拖放來建立筆刷，如果將滑鼠鍵按住不放則會連續隨機生成不同樣式的圓。
+          <br><br>
+          <i class="text-muted">2022.12.27</i>
+        </p>
+      </div>
+      <div class="col-md-5">
+        <a class="hover-profile" href="./mixcircle">
+          <img class="img-fluid" src="./images/1.png" alt="">
+        </a>
+      </div>
+
+      <div class="col-md-5">
+        <a class="hover-profile" href="./justfish">
+          <img class="img-fluid" src="./images/2.png" alt="">
+        </a>
+      </div>
+      <div class="col-md-5">
+        <h2 class="fs-3 mb-3">
+          <span class="text-muted fs-6">02 - 繪製程式自畫像、景物或怪獸</span><br>
+          Just Fish
+        </h2>
+        <p class="fs-6">
+          作品概述：<br>
+          利用 curveVertex() 繪製一隻魚，由於 curveVertex() 位置非常不好控制，來回花了很多時間處理，<br>
+          也發現在不同裝置上呈現出來的圖像差很多，最後只能限制畫布的大小避免變形問題。
+          <br><br>
+          操作說明：<br>
+          可使用滑鼠移動，在魚的後面建立隨機的泡泡，並即時變換魚的顏色。
+          <br><br>
+          <i class="text-muted">2022.12.28</i>
+        </p>
+      </div>
+
+      <!-- <div class="col-md-4">
+        <h2 class="fs-3">
+          First featurette heading.
+        </h2>
+        <p class="fs-6">
+          Some great placeholder content for the first featurette here. Imagine some exciting prose here.
+        </p>
+      </div>
+      <div class="col-md-8">
+        <img class="img-fluid" src="./images/1.png" alt="">
+      </div>
+
+      <div class="col-md-5">
+        <img class="img-fluid" src="./images/2.png" alt="">
+      </div>
+      <div class="col-md-7">
+        <h2 class="fs-3">
+          First featurette heading.
+        </h2>
+        <p class="fs-6">
+          Some great placeholder content for the first featurette here. Imagine some exciting prose here.
+        </p>
+      </div>
+    </div> -->
+  </main>
+  <footer class="bg-dark py-5 text-white">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          © 2022 All rights reserved. by
+          <a class="link-light" href="https://github.com/WangShuan" target="_blank">WangShuan</a> / <a class="link-light" href="mailto:loveabo103103@gmail.com">Email</a>.
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
