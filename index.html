@@ -5,18 +5,19 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creative Coding Collections</title>
+  <title>WangShuan's Creative Coding Collections</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
     crossorigin="anonymous"></script>
   <style>
-    .hover-profile{
+    .hover-profile {
       position: relative;
       display: block;
     }
-    .hover-profile::before{
+
+    .hover-profile::before {
       opacity: 0;
       transition: all .5s;
       content: "SEE MORE";
@@ -34,40 +35,63 @@
       justify-content: center;
       background: #ffffffaa;
     }
-    .hover-profile:hover::before{
+
+    .hover-profile:hover::before {
       opacity: 1;
     }
-    @media all and (max-width: 768px){
-      .hover-profile::before{
+
+    @media all and (max-width: 768px) {
+      .hover-profile::before {
         opacity: 1;
-      font-size: 16px;
+        font-size: 16px;
         height: 40px;
       }
+    }
+
+    body{
+      position: relative;
+    }
+
+    .footer-bg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .container{
+      height: 100vh;
+      overflow: auto;
+      background: #0000005b;
     }
   </style>
 </head>
 
 <body>
-  <main class="container my-5">
-    <section class="text-center p-5 bg-dark my-5">
-      <h1 class="mb-3 text-white">Creative Coding Collections by Wang Shuan</h1>
-      <p class="fs-6 text-light">
-        Hello ~ 我是萱😊 是一名非本科轉職的前端工程師！<br>
-        因受全端工程師的老公影響，開始研究網頁前端技術，目前已累積兩年前端工作經驗，準備轉型為自由接案者。<br>
-        現在的網頁技術推陳出新，期盼自己可以透過更豐富、具有互動性的作品來增加使用者體驗，因而開始學習『互動藝術程式創作』。<br>
-        該頁面皆是我於學習過程中逐漸獨立完成的作品，歡迎點擊並前往瀏覽網站，如有任何建議也歡迎來信指教 ~<br>
-      </p>
-    </section>
-    <div class="row g-5 align-items-end justify-content-center">
-
-      <div class="col-md-5">
+  <main class="p-sm-5 p-3 container">
+    <div class="text-center pb-4 pb-md-5">
+      <h1 class="my-3 text-white">Creative Coding Collections by <a class="link-light" href="https://github.com/WangShuan" target="_blank">WangShuan</a></h1>
+        <p class="fs-6 text-light my-3">
+          Hello ~ 我是萱😊 是一名非本科轉職的前端工程師！<br>
+          因受全端工程師的老公影響，開始研究網頁前端技術，目前已累積兩年前端工作經驗，準備轉型為自由接案者。<br>
+          現在的網頁技術推陳出新，期盼自己可以透過更豐富、具有互動性的作品來增加使用者體驗，因而開始學習『互動藝術程式創作』。<br>
+          該頁面為學習過程中個人獨立完成的小作品，皆有附上 OpenProcessing 連結，歡迎點擊瀏覽，如有任何建議也請不吝<a
+          class="link-light" href="mailto:loveabo103103@gmail.com">來信</a>指教 ~
+        </p>
+    </div>
+    
+    <div class="row p-4 p-md-5 justify-content-center bg-light">
+      <div class="col-md-7">
         <h2 class="fs-3 mb-3">
           <span class="text-muted fs-6">01 - 製作揮灑的彩色滑鼠筆刷</span><br>
           Mix Circle
         </h2>
         <p class="fs-6">
           作品概述：<br>
-          初次接觸 P5.js，參考了教材中提供的 <a class="link-dark" href="https://openprocessing.org/sketch/595598" target="_blank">Rotary Brush (OpenProcessing)</a> 作品進行延伸應用。
+          初次接觸 P5.js，參考了教材中提供的 <a class="link-dark" href="https://openprocessing.org/sketch/595598"
+            target="_blank">Rotary Brush (OpenProcessing)</a> 作品進行延伸應用。
           剛開始製作時利用各種配色 mix 出來的圖不是很理想，所以最後決定改用灰黑白來實現。
           <br><br>
           操作說明：<br>
@@ -81,13 +105,10 @@
           <img class="img-fluid" src="./images/1.png" alt="">
         </a>
       </div>
-
-      <div class="col-md-5">
-        <a class="hover-profile" href="./justfish">
-          <img class="img-fluid" src="./images/2.png" alt="">
-        </a>
-      </div>
-      <div class="col-md-5">
+    </div>
+    
+    <div class="row p-4 p-md-5 justify-content-center bg-black text-light">
+      <div class="col-md-7 order-md-2">
         <h2 class="fs-3 mb-3">
           <span class="text-muted fs-6">02 - 繪製程式自畫像、景物或怪獸</span><br>
           Just Fish
@@ -104,41 +125,111 @@
         </p>
       </div>
 
-      <!-- <div class="col-md-4">
-        <h2 class="fs-3">
-          First featurette heading.
-        </h2>
-        <p class="fs-6">
-          Some great placeholder content for the first featurette here. Imagine some exciting prose here.
-        </p>
-      </div>
-      <div class="col-md-8">
-        <img class="img-fluid" src="./images/1.png" alt="">
-      </div>
-
-      <div class="col-md-5">
-        <img class="img-fluid" src="./images/2.png" alt="">
-      </div>
-      <div class="col-md-7">
-        <h2 class="fs-3">
-          First featurette heading.
-        </h2>
-        <p class="fs-6">
-          Some great placeholder content for the first featurette here. Imagine some exciting prose here.
-        </p>
-      </div>
-    </div> -->
-  </main>
-  <footer class="bg-dark py-5 text-white">
-    <div class="container">
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          © 2022 All rights reserved. by
-          <a class="link-light" href="https://github.com/WangShuan" target="_blank">WangShuan</a> / <a class="link-light" href="mailto:loveabo103103@gmail.com">Email</a>.
-        </div>
+      <div class="col-md-5 order-md-1">
+        <a class="hover-profile" href="./justfish">
+          <img class="img-fluid" src="./images/2.png" alt="">
+        </a>
       </div>
     </div>
-  </footer>
+    
+    <div class="row p-4 p-md-5 justify-content-center bg-light">
+      <div class="col-md-7">
+        <h2 class="fs-3 mb-3">
+          <span class="text-muted fs-6">03 - 用程式重現動態版博物館藝術</span><br>
+          For Loop Rect
+        </h2>
+        <p class="fs-6">
+          作品概述：<br>
+          結合迴圈與 random 的手法重複建構出像磁磚的小方塊，<br>
+          再利用隨機生成的位置產生許多小圓點色彩，營造出噴灑顏料的視覺感。
+          <br><br>
+          操作說明：<br>
+          可利用鼠標的所在位置影響噴灑生成的小圓點色彩。
+          <br><br>
+          <i class="text-muted">2022.12.28</i>
+        </p>
+      </div>
+      <div class="col-md-5">
+        <a class="hover-profile" href="./forlooprect">
+          <img class="img-fluid" src="./images/3.png" alt="">
+        </a>
+      </div>
+    </div>
+
+    <div class="row p-4 p-md-5 justify-content-center bg-black text-light">
+      <div class="col-md-7 order-md-2">
+        <h2 class="fs-3 mb-3">
+          <span class="text-muted fs-6">04 - 用抽象的方式視覺化時間</span><br>
+          Time With Shape
+        </h2>
+        <p class="fs-6">
+          作品概述：<br>
+          利用時、分、秒的數值產生形狀於隨機位置，<br>
+          從上到下分別是照秒數生成的圓形、按照分鐘生成的橫向長方形以及按照小時生成的直向長方形
+          <br><br>
+          操作說明：<br>
+          該作無互動效果，會隨時間自行更動畫面。
+          <br><br>
+          <i class="text-muted">2022.12.29</i>
+        </p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <a class="hover-profile" href="./timewithshape">
+          <img class="img-fluid" src="./images/4.png" alt="">
+        </a>
+      </div>
+    </div>
+
+    <div class="row p-4 p-md-5 justify-content-center bg-light">
+      <div class="col-md-7">
+        <h2 class="fs-3 mb-3">
+          <span class="text-muted fs-6">05 - 利用繽紛色彩繪製製作專輯封面</span><br>
+          Broken Rainbow
+        </h2>
+        <p class="fs-6">
+          作品概述：<br>
+          用迴圈先製作出類似迪斯可球的圓形當背景，再於背景上疊加隨機寬度的線條，<br>
+          利用不同的色彩疊加模式製造出切割的視覺感。<br>
+          (本作品使用了 SCREEN、OVERLAY、EXCLUSION 三種 blendMode)
+          <br><br>
+          操作說明：<br>
+          顏色與疊加效果會隨時間變得越來越細碎，可在喜歡的時機點按下滑鼠鍵以停止切割。
+          <br><br>
+          <i class="text-muted">2022.12.30</i>
+        </p>
+      </div>
+      <div class="col-md-5">
+        <a class="hover-profile" href="./brokenrainbow">
+          <img class="img-fluid" src="./images/5.png" alt="">
+        </a>
+      </div>
+    </div>
+
+    <div class="row p-4 p-md-5 justify-content-center bg-black text-light">
+      <div class="col-md-7 order-md-2">
+        <h2 class="fs-3 mb-3">
+          <span class="text-muted fs-6">06 - 生成式藝術或圖騰</span><br>
+          Mix Color By Rect
+        </h2>
+        <p class="fs-6">
+          作品概述：<br>
+          嘗試利用 colorMode 交錯不同大小的方形建立出類似交織的樣式。<br>
+          (本作品使用了 BLEND、SCREEN、DIFFERENCE 三種 blendMode)
+          <br><br>
+          操作說明：<br>
+          該作無互動效果。
+          <br><br>
+          <i class="text-muted">2023.01.03</i>
+        </p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <a class="hover-profile" href="./mixcolorbyrect">
+          <img class="img-fluid" src="./images/6.png" alt="">
+        </a>
+      </div>
+    </div>
+  </main>
+  <iframe class="footer-bg" src="./footer-bg/footer-bg.html"></iframe>
 </body>
 
 </html>

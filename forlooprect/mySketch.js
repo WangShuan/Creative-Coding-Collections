@@ -1,5 +1,5 @@
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	createCanvas(windowWidth, windowHeight-56);
 	background(0)
 }
 
@@ -12,7 +12,7 @@ function draw() {
 	rectMode(CENTER)
 	rect(x,y,circleSize)
 	for(let i=0;i<60;i++){
-		fill(random(0,255),random(0,255),mouseX)
+		fill(random(0,255),random(0,255),map(mouseX+mouseY,0,width+height,0,255))
 		noStroke()
 		circle(x+random(-40,40),y-random(-40,40),random(3,10))
 	}
