@@ -9,6 +9,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   <style>
+    html {
+      overflow: -moz-hidden-unscrollable;
+      height: 100%;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    body {
+      -ms-overflow-style: none;
+      height: 100%;
+      width: calc(100vw + 18px);
+      overflow: auto;
+    }
+
     .hover-profile {
       position: relative;
       display: block;
@@ -155,7 +171,7 @@
           再利用隨機生成的位置產生許多小圓點色彩，營造出噴灑顏料的視覺感。
           <br><br>
           操作說明：<br>
-          可利用鼠標的所在位置影響噴灑生成的小圓點色彩。
+          可使用滑鼠移動控制噴灑出來的小圓點色系。
           <br><br>
           <i class="text-muted">2022.12.28</i>
         </p>
