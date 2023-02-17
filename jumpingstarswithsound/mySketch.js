@@ -127,3 +127,7 @@ function mousePressed() {
 		location.reload();
 	}
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
+}

@@ -88,3 +88,7 @@ function mousePressed() {
 		size: random(5, 10)
 	})
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
+}

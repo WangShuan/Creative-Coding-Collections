@@ -88,3 +88,7 @@ function gone(o) {
 		o.r = 0
 	}
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
+}

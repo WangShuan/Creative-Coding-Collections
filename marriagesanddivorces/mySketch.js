@@ -1,4 +1,4 @@
-let myData, maxNum = 1000000, a;
+let myData, maxNum = 1000000, a, maxW;
 function preload() {
 	myData = loadJSON("Marriages&Divorces.json")
 }
@@ -10,139 +10,118 @@ function easeOutQuart(x) {
 function setup() {
 	createCanvas(windowWidth, windowHeight - 56);
 	background(100);
-	noFill()
+	noStroke()
 	textSize(16)
 	textStyle(BOLD)
 	myData = Object.values(myData)
 	myData = myData.filter(item => item.date > 105)
-	angleMode(DEGREES);
+	maxW = width - 180
 }
 
 function draw() {
 	background(0)
 	push()
-	fill(255)
-	textSize(24)
-	text("民國106~110年\n婚姻狀況統計", width - 180, height - 50)
+	fill(200, 200, 200, 20)
+	textSize(60)
+	text("民國106~110年婚姻狀況統計", width / 2 - 375, height / 2 + 30)
 	pop()
+	translate(0, 50)
 
 	for (let i = 0; i < myData.length; i++) {
 		let d = myData[i]
 		a = easeOutQuart(map(frameCount - i * 100, 0, 200, 0, 1, true))
+		text(d.date + "年(男) :", 20, i * 30 + 50)
+		text(d.date + "年(女) :", 20, i * 30 + 50 + height / 2)
+
 		push()
-		translate(width / 5, height / 2)
-		stroke("#198A6E")
-		circle(0, 0, map(reNum(d.totalMale), 0, maxNum, 0, width / 2.5) * a)
-		push()
-		fill("#198A6E")
-		rotate(i * 72)
-		rect(0, 0, 10, map(reNum(d.totalMale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
-		stroke("#48A890")
-		circle(0, 0, map(reNum(d.marriedMale), 0, maxNum, 0, width / 2.5) * a)
-		push()
-		fill("#48A890")
-		rotate(i * 72 + 10)
-		rect(0, 0, 10, map(reNum(d.marriedMale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
-		stroke("#77C5B1")
-		circle(0, 0, map(reNum(d.unmarriedMale), 0, maxNum, 0, width / 2.5) * a)
-		push()
-		fill("#77C5B1")
-		rotate(i * 72 + 20)
-		rect(0, 0, 10, map(reNum(d.unmarriedMale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
-		stroke("#A6E2D2")
-		circle(0, 0, map(reNum(d.divorcedMale), 0, maxNum, 0, width / 2.5) * a)
-		push()
-		fill("#A6E2D2")
-		rotate(i * 72 + 30)
-		rect(0, 0, 10, map(reNum(d.divorcedMale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
-		stroke("#fff")
-		circle(0, 0, map(reNum(d.widowedMale), 0, maxNum, 0, width / 2.5) * a)
-		push()
+		translate(160, 30)
+		fill("#194FB3")
+		rect(0, i * 30, map(reNum(d.totalMale), 0, maxNum, 0, maxW) * a, 20)
+
+		fill("#2969E0")
+		rect(0, i * 30, map(reNum(d.marriedMale), 0, maxNum, 0, maxW) * a, 20)
+
+		fill("#5E8FE8")
+		rect(0, i * 30, map(reNum(d.unmarriedMale), 0, maxNum, 0, maxW) * a, 20)
+
+		fill("#A6C1F2")
+		rect(0, i * 30, map(reNum(d.divorcedMale), 0, maxNum, 0, maxW) * a, 20)
+
 		fill("#fff")
-		rotate(i * 72 + 40)
-		rect(0, 0, 10, map(reNum(d.widowedMale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		text(d.date + "年", 0, height / 3)
+		rect(0, i * 30, map(reNum(d.widowedMale), 0, maxNum, 0, maxW) * a, 20)
 		pop()
+
 		if (i === myData.length - 1) {
-			push()
 			noStroke()
-			fill("#198A6E")
-			text("總計男性", map(reNum(d.totalMale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.totalMale), 0, maxNum, 0, width / 2.5) / 2)
-			fill("#48A890")
-			text("已婚男性", map(reNum(d.marriedMale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.marriedMale), 0, maxNum, 0, width / 2.5) / 2)
-			fill("#77C5B1")
-			text("未婚男性", map(reNum(d.unmarriedMale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.unmarriedMale), 0, maxNum, 0, width / 2.5) / 2)
-			fill("#A6E2D2")
-			text("離婚男性", map(reNum(d.divorcedMale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.divorcedMale), 0, maxNum, 0, width / 2.5) / 2)
+			fill("#194FB3")
+			circle(40, (i + 1) * 30 + 70 - 10, 20)
+			text("總計男性", 60, (i + 1) * 30 + 70)
+
+			fill("#2969E0")
+			circle(40 + 150, (i + 1) * 30 + 70 - 10, 20)
+			text("已婚男性", 60 + 150, (i + 1) * 30 + 70)
+
+			fill("#5E8FE8")
+			circle(40 + 300, (i + 1) * 30 + 70 - 10, 20)
+			text("未婚男性", 60 + 300, (i + 1) * 30 + 70)
+
+			fill("#A6C1F2")
+			circle(40 + 450, (i + 1) * 30 + 70 - 10, 20)
+			text("離婚男性", 60 + 450, (i + 1) * 30 + 70)
+
 			fill("#fff")
-			text("喪偶男性", map(reNum(d.widowedMale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.widowedMale), 0, maxNum, 0, width / 2.5) / -2)
-			pop()
+			circle(40 + 600, (i + 1) * 30 + 70 - 10, 20)
+			text("喪偶男性", 60 + 600, (i + 1) * 30 + 70)
 		}
 
-		translate(width / 2.5, 0)
-		stroke("#a30000")
-		circle(0, 0, map(reNum(d.totalFemale), 0, maxNum, 0, width / 2.5) * a)
 		push()
+		translate(160, 30)
 		fill("#a30000")
-		rotate(i * 72)
-		rect(0, 0, 10, map(reNum(d.totalFemale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
+		rect(0, i * 30 + height / 2, map(reNum(d.totalFemale), 0, maxNum, 0, maxW) * a, 20)
 
-		stroke("#ba3636")
-		circle(0, 0, map(reNum(d.marriedFemale), 0, maxNum, 0, width / 2.5) * a)
-		push()
 		fill("#ba3636")
-		rotate(i * 72 + 10)
-		rect(0, 0, 10, map(reNum(d.marriedFemale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
+		rect(0, i * 30 + height / 2, map(reNum(d.marriedFemale), 0, maxNum, 0, maxW) * a, 20)
 
-		stroke("#d16b6b")
-		circle(0, 0, map(reNum(d.unmarriedFemale), 0, maxNum, 0, width / 2.5) * a)
-		push()
 		fill("#d16b6b")
-		rotate(i * 72 + 20)
-		rect(0, 0, 10, map(reNum(d.unmarriedFemale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
+		rect(0, i * 30 + height / 2, map(reNum(d.unmarriedFemale), 0, maxNum, 0, maxW) * a, 20)
 
-		stroke("#e8a1a1")
-		circle(0, 0, map(reNum(d.divorcedFemale), 0, maxNum, 0, width / 2.5) * a)
-		push()
 		fill("#e8a1a1")
-		rotate(i * 72 + 30)
-		rect(0, 0, 10, map(reNum(d.divorcedFemale), 0, maxNum, 0, width / 2.5) / 2 * a)
+		rect(0, i * 30 + height / 2, map(reNum(d.divorcedFemale), 0, maxNum, 0, maxW) * a, 20)
+
+		fill("#fff")
+		rect(0, i * 30 + height / 2, map(reNum(d.widowedFemale), 0, maxNum, 0, maxW) * a, 20)
 		pop()
 
-		stroke("#fff")
-		circle(0, 0, map(reNum(d.widowedFemale), 0, maxNum, 0, width / 2.5) * a)
-		push()
-		fill("#fff")
-		rotate(i * 72 + 40)
-		text(d.date + "年", 0, height / 3)
-		rect(0, 0, 10, map(reNum(d.widowedFemale), 0, maxNum, 0, width / 2.5) / 2 * a)
-		pop()
 		if (i === myData.length - 1) {
-			push()
 			noStroke()
 			fill("#a30000")
-			text("總計女性", map(reNum(d.totalFemale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.totalFemale), 0, maxNum, 0, width / 2.5) / 2)
+			circle(40, (i + 1) * 30 + height / 2 + 70 - 10, 20)
+			text("總計女性", 60, (i + 1) * 30 + height / 2 + 70)
+
 			fill("#ba3636")
-			text("已婚女性", map(reNum(d.marriedFemale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.marriedFemale), 0, maxNum, 0, width / 2.5) / 2)
+			circle(40 + 150, (i + 1) * 30 + height / 2 + 70 - 10, 20)
+			text("已婚女性", 60 + 150, (i + 1) * 30 + height / 2 + 70)
+
 			fill("#d16b6b")
-			text("未婚女性", map(reNum(d.unmarriedFemale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.unmarriedFemale), 0, maxNum, 0, width / 2.5) / 2)
+			circle(40 + 300, (i + 1) * 30 + height / 2 + 70 - 10, 20)
+			text("未婚女性", 60 + 300, (i + 1) * 30 + height / 2 + 70)
+
 			fill("#e8a1a1")
-			text("離婚女性", map(reNum(d.divorcedFemale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.divorcedFemale), 0, maxNum, 0, width / 2.5) / 2)
+			circle(40 + 450, (i + 1) * 30 + height / 2 + 70 - 10, 20)
+			text("離婚女性", 60 + 450, (i + 1) * 30 + height / 2 + 70)
+
 			fill("#fff")
-			text("喪偶女性", map(reNum(d.widowedFemale), 0, maxNum, 0, width / 2.5) / 5, map(reNum(d.widowedFemale), 0, maxNum, 0, width / 2.5) / -2)
-			pop()
+			circle(40 + 600, (i + 1) * 30 + height / 2 + 70 - 10, 20)
+			text("喪偶女性", 60 + 600, (i + 1) * 30 + height / 2 + 70)
 		}
-		pop()
+
 	}
 }
 
 function reNum(string) {
 	return Number(string.replace(/,/g, ""))
+}
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
 }

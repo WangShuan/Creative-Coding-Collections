@@ -33,3 +33,7 @@ function draw() {
 	fill(255)
 	text(hour() + ":" + minute() + ":" + second(), width - l - 40, height - 40)
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
+}

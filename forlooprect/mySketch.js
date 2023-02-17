@@ -24,3 +24,7 @@ function draw() {
 		y += circleSize + space
 	}
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
+}

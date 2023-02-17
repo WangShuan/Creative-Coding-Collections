@@ -66,3 +66,7 @@ function draw() {
 function resetCanvas() {
 	arr = []
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
+}

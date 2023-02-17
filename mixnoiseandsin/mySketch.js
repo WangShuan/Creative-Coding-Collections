@@ -32,3 +32,7 @@ function draw() {
 		}
 	}
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 56);
+}

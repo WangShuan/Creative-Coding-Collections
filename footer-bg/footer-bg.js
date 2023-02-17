@@ -29,3 +29,6 @@ function draw() {
 		p.y += noise(p.x / 200, p.y / 200, 10000) - 0.5
 	}
 }
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+}

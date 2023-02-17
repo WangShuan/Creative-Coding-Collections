@@ -95,3 +95,7 @@ function mousePressed() {
 		bullets.push(bullet)
 	}
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight - 156);
+}
