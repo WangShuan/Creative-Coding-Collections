@@ -8,6 +8,7 @@
   <title>WangShuan's Creative Coding Collections</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js" type="text/javascript"></script>
   <style>
     html {
       overflow: -moz-hidden-unscrollable;
@@ -95,6 +96,8 @@
 </head>
 
 <body>
+  <div id="p5Canvas"></div>
+
   <main class="p-sm-5 p-3 container">
     <div class="text-center pb-4 pb-md-5">
       <h1 class="my-3 text-white">Creative Coding Collections by <a class="link-light" href="https://github.com/WangShuan" target="_blank">WangShuan</a>
@@ -428,7 +431,48 @@
       </div>
     </div>
   </main>
-  <iframe class="footer-bg" src="./footer-bg/footer-bg.html"></iframe>
+
+  <script>
+    function setup() {
+      const canvas = createCanvas(windowWidth, windowHeight);
+      canvas.position(0, 0);
+      canvas.style('z-index', '-1');
+
+      background(0);
+      if (windowWidth > 700) {
+        s = 20
+      } else {
+        s = 10
+      }
+      for (let x = 0; x < width; x += width / s) {
+        for (let y = 0; y < height; y += width / s) {
+          arr.push({
+            x: x,
+            y: y
+          })
+        }
+      }
+
+    }
+    let arr = [], s
+    function draw() {
+      background(0, 0.01);
+      colorMode(HSB)
+      for (let i = 0; i < arr.length; i++) {
+        let p = arr[i]
+        fill(noise(p.x / 300, p.y / 300) * 360, 80, 80)
+        noStroke()
+        circle(p.x, p.y, 1);
+        p.x += noise(p.x / 200, p.y / 200, 100) - 0.5
+        p.y += noise(p.x / 200, p.y / 200, 10000) - 0.5
+      }
+    }
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    new p5();
+  </script>
 </body>
 
 </html>
