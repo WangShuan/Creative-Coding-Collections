@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WangShuan's Creative Coding Collections</title>
+  <title>WangXuan's Creative Coding Collections</title>
+  <meta name="description" content="前端工程師 WangXuan 的互動藝術程式創作集，使用 p5.js 完成 13 個可互動的小作品，附操作說明與作品連結。">
+  <meta name="theme-color" content="#000000">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="WangXuan's Creative Coding Collections">
+  <meta property="og:description" content="使用 p5.js 完成的 13 個互動藝術程式創作。">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js" type="text/javascript"></script>
   <style>
     html {
-      overflow: -moz-hidden-unscrollable;
-      height: 100%;
-    }
-
-    body::-webkit-scrollbar {
-      display: none;
+      background: #000;
     }
 
     body {
-      -ms-overflow-style: none;
-      height: 100%;
-      width: calc(100vw + 18px);
-      overflow: auto;
+      background: transparent;
+      color: #fff;
+    }
+
+    /* p5 背景畫布：固定在視窗，不影響捲動與點擊 */
+    canvas {
+      position: fixed !important;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
     }
 
     .hover-profile {
@@ -32,13 +36,7 @@
     }
 
     .hover-profile::before {
-      opacity: 0;
-      transition: all .5s;
       content: "SEE MORE";
-      font-size: 20px;
-      font-weight: bold;
-      color: #808080;
-      text-shadow: 2px 2px 2px #fff;
       position: absolute;
       left: 0;
       bottom: 0;
@@ -47,14 +45,26 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #ffffffaa;
+      font-size: 20px;
+      font-weight: bold;
+      color: #444;
+      text-shadow: 2px 2px 2px #fff;
+      background: #ffffffcc;
+      opacity: 0;
+      transition: opacity .5s;
     }
 
-    .hover-profile:hover::before {
+    .hover-profile:hover::before,
+    .hover-profile:focus-visible::before {
       opacity: 1;
     }
 
-    @media all and (max-width: 768px) {
+    .hover-profile:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 768px) {
       .hover-profile::before {
         opacity: 1;
         font-size: 16px;
@@ -62,416 +72,328 @@
       }
     }
 
-    body {
-      position: relative;
-    }
-
-    .footer-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .container {
-      height: 100vh;
-      overflow: auto;
-      color: #fff;
+    @media (prefers-reduced-motion: reduce) {
+      .hover-profile::before {
+        transition: none;
+      }
     }
 
     .bg-255 {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.18);
     }
 
     .bg-0 {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.4);
     }
 
     .text-muted {
-      color: #bbb !important;
+      color: #ddd !important;
     }
   </style>
 </head>
 
 <body>
-  <div id="p5Canvas"></div>
-
-  <main class="p-sm-5 p-3 container">
-    <div class="text-center pb-4 pb-md-5">
-      <h1 class="my-3 text-white">Creative Coding Collections by <a class="link-light" href="https://github.com/WangShuan" target="_blank">WangShuan</a>
-      </h1>
+  <main class="container p-sm-5 p-3">
+    <header class="text-center pb-4 pb-md-5">
+      <h1 class="my-3 text-white">Creative Coding Collections by <a class="link-light" href="https://github.com/WangShuan" target="_blank" rel="noopener noreferrer">WangXuan</a></h1>
       <p class="fs-6 my-3">
-        Hello ~ 我是萱😊 是一名非本科轉職的前端工程師！<br>
-        因受全端工程師的老公影響，開始研究網頁前端技術，目前已累積兩年前端工作經驗，準備轉型為自由接案者。<br>
-        現在的網頁技術推陳出新，期盼自己可以透過更豐富、具有互動性的作品來增加使用者體驗，因而開始學習『互動藝術程式創作』。<br>
-        該頁面為學習過程中個人獨立完成的小作品，皆有附上 OpenProcessing 連結，歡迎點擊瀏覽，如有任何建議也請不吝
-        <a class="link-light" href="mailto:loveabo103103@gmail.com">來信</a>
-        指教 ~
+        Hello ~ 我是萱😊 目前是全職自由接案的前端工程師。<br>
+        當初受到全端工程師老公的影響，從非本科轉職踏入網頁前端，累積實務經驗後轉為自由接案。<br>
+        這個頁面收錄的是 2022 年底到 2023 年初，我開始學習『互動藝術程式創作』時獨立完成的 p5.js 小作品，<br>
+        當時希望能透過更豐富、更有互動性的畫面來提升使用者體驗。<br>
+        這些是早期的練習，我把它們保留下來，作為一段學習過程的紀錄。<br>
+        歡迎點擊瀏覽，如有任何建議也歡迎<a class="link-light" href="mailto:xuan97222@gmail.com">來信</a>指教 ~
       </p>
-    </div>
+    </header>
 
-    <div class="row p-4 p-md-5 align-items-center bg-255">
+    <article class="row p-4 p-md-5 align-items-center bg-255">
       <div class="col-md-7">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">01 - 製作揮灑的彩色滑鼠筆刷</span><br>
+          <span class="text-muted fs-6 d-block">01 - 製作揮灑的彩色滑鼠筆刷</span>
           Mix Circle
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          初次接觸 P5.js，參考了教材中提供的 <a class="link-light" href="https://openprocessing.org/sketch/595598" target="_blank">Rotary Brush (OpenProcessing)</a> 作品進行延伸應用。
-          剛開始製作時利用各種配色 mix 出來的圖不是很理想，所以最後決定改用灰黑白來實現。
-          <br><br>
-          操作說明：<br>
-          可使用滑鼠點擊並拖放來建立筆刷，如果將滑鼠鍵按住不放則會連續隨機生成不同樣式的圓。
-          <br><br>
-          <i class="text-muted">2022.12.27</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>初次接觸 P5.js，參考了教材中提供的 <a class="link-light" href="https://openprocessing.org/sketch/595598" target="_blank" rel="noopener noreferrer">Rotary Brush (OpenProcessing)</a> 作品進行延伸應用。剛開始製作時利用各種配色 mix 出來的圖不是很理想，所以最後決定改用灰黑白來實現。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>可使用滑鼠點擊並拖放來建立筆刷，如果將滑鼠鍵按住不放則會連續隨機生成不同樣式的圓。</p>
+        <time class="text-muted fst-italic" datetime="2022-12-27">2022.12.27</time>
       </div>
       <div class="col-md-5">
         <a class="hover-profile" href="./mixcircle">
-          <img class="img-fluid border-light border border-5" src="./images/1.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/1.png" alt="Mix Circle 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-0">
+    <article class="row p-4 p-md-5 align-items-center bg-0">
       <div class="col-md-7 order-md-2">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">02 - 繪製程式自畫像、景物或怪獸</span><br>
+          <span class="text-muted fs-6 d-block">02 - 繪製程式自畫像、景物或怪獸</span>
           Just Fish
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          利用 curveVertex() 繪製一隻魚，由於 curveVertex() 位置非常不好控制，<br>
-          也發現在不同裝置上呈現出來的圖像差很多，最後只能限制畫布的大小避免變形問題。<br>
-          建議瀏覽時視窗寬度大於 800px 於才不會變型唷！
-          <br><br>
-          操作說明：<br>
-          可使用滑鼠移動，在魚的後面建立隨機的泡泡，並即時變換魚的顏色。
-          <br><br>
-          <i class="text-muted">2022.12.28</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>利用 curveVertex() 繪製一隻魚，由於 curveVertex() 位置非常不好控制，也發現在不同裝置上呈現出來的圖像差很多，最後只能限制畫布的大小避免變形問題。建議瀏覽時視窗寬度大於 800px 才不會變形唷！</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>可使用滑鼠移動，在魚的後面建立隨機的泡泡，並即時變換魚的顏色。</p>
+        <time class="text-muted fst-italic" datetime="2022-12-28">2022.12.28</time>
       </div>
-
       <div class="col-md-5 order-md-1">
         <a class="hover-profile" href="./justfish">
-          <img class="img-fluid border-light border border-5" src="./images/2.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/2.png" alt="Just Fish 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-255">
+    <article class="row p-4 p-md-5 align-items-center bg-255">
       <div class="col-md-7">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">03 - 用程式重現動態版博物館藝術</span><br>
+          <span class="text-muted fs-6 d-block">03 - 用程式重現動態版博物館藝術</span>
           For Loop Rect
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          結合迴圈與 random 的手法重複建構出像磁磚的小方塊，<br>
-          再利用隨機生成的位置產生許多小圓點色彩，營造出噴灑顏料的視覺感。
-          <br><br>
-          操作說明：<br>
-          可使用滑鼠移動控制噴灑出來的小圓點色系。
-          <br><br>
-          <i class="text-muted">2022.12.28</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>結合迴圈與 random 的手法重複建構出像磁磚的小方塊，再利用隨機生成的位置產生許多小圓點色彩，營造出噴灑顏料的視覺感。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>可使用滑鼠移動控制噴灑出來的小圓點色系。</p>
+        <time class="text-muted fst-italic" datetime="2022-12-28">2022.12.28</time>
       </div>
       <div class="col-md-5">
         <a class="hover-profile" href="./forlooprect">
-          <img class="img-fluid border-light border border-5" src="./images/3.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/3.png" alt="For Loop Rect 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-0">
+    <article class="row p-4 p-md-5 align-items-center bg-0">
       <div class="col-md-7 order-md-2">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">04 - 用抽象的方式視覺化時間</span><br>
+          <span class="text-muted fs-6 d-block">04 - 用抽象的方式視覺化時間</span>
           Time With Shape
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          利用時、分、秒的數值產生形狀於隨機位置，<br>
-          從上到下分別是照秒數生成的圓形、按照分鐘生成的橫向長方形以及按照小時生成的直向長方形。
-          <br><br>
-          操作說明：<br>
-          該作無互動效果，會隨時間自行更動畫面。
-          <br><br>
-          <i class="text-muted">2022.12.29</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>利用時、分、秒的數值產生形狀於隨機位置，從上到下分別是照秒數生成的圓形、按照分鐘生成的橫向長方形以及按照小時生成的直向長方形。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>該作無互動效果，會隨時間自行更動畫面。</p>
+        <time class="text-muted fst-italic" datetime="2022-12-29">2022.12.29</time>
       </div>
       <div class="col-md-5 order-md-1">
         <a class="hover-profile" href="./timewithshape">
-          <img class="img-fluid border-light border border-5" src="./images/4.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/4.png" alt="Time With Shape 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-255">
+    <article class="row p-4 p-md-5 align-items-center bg-255">
       <div class="col-md-7">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">05 - 利用繽紛色彩繪製製作專輯封面</span><br>
+          <span class="text-muted fs-6 d-block">05 - 利用繽紛色彩繪製製作專輯封面</span>
           Broken Rainbow
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          用迴圈先製作出類似迪斯可球的圓形當背景，再於背景上疊加隨機寬度的線條，<br>
-          利用不同的色彩疊加模式製造出切割的視覺感。<br>
-          (本作品使用了 SCREEN、OVERLAY、EXCLUSION 三種 blendMode)。
-          <br><br>
-          操作說明：<br>
-          顏色與疊加效果會隨時間變得越來越細碎，可在喜歡的時機點按下滑鼠鍵以停止切割。
-          <br><br>
-          <i class="text-muted">2022.12.30</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>用迴圈先製作出類似迪斯可球的圓形當背景，再於背景上疊加隨機寬度的線條，利用不同的色彩疊加模式製造出切割的視覺感。(本作品使用了 SCREEN、OVERLAY、EXCLUSION 三種 blendMode)。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>顏色與疊加效果會隨時間變得越來越細碎，可在喜歡的時機點按下滑鼠鍵以停止切割。</p>
+        <time class="text-muted fst-italic" datetime="2022-12-30">2022.12.30</time>
       </div>
       <div class="col-md-5">
         <a class="hover-profile" href="./brokenrainbow">
-          <img class="img-fluid border-light border border-5" src="./images/5.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/5.png" alt="Broken Rainbow 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-0">
+    <article class="row p-4 p-md-5 align-items-center bg-0">
       <div class="col-md-7 order-md-2">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">06 - 生成式藝術或圖騰</span><br>
+          <span class="text-muted fs-6 d-block">06 - 生成式藝術或圖騰</span>
           Mix Color By Rect
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          嘗試利用 colorMode 交錯不同大小的方形建立出類似交織的樣式。<br>
-          (本作品使用了 BLEND、SCREEN、DIFFERENCE 三種 blendMode)。
-          <br><br>
-          操作說明：<br>
-          該作無互動效果。
-          <br><br>
-          <i class="text-muted">2023.01.03</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>嘗試利用 blendMode 交錯不同大小的方形建立出類似交織的樣式。(本作品使用了 BLEND、SCREEN、DIFFERENCE 三種 blendMode)。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>該作無互動效果。</p>
+        <time class="text-muted fst-italic" datetime="2023-01-03">2023.01.03</time>
       </div>
       <div class="col-md-5 order-md-1">
         <a class="hover-profile" href="./mixcolorbyrect">
-          <img class="img-fluid border-light border border-5" src="./images/6.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/6.png" alt="Mix Color By Rect 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-255">
+    <article class="row p-4 p-md-5 align-items-center bg-255">
       <div class="col-md-7">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">07 - 製作互動場景</span><br>
+          <span class="text-muted fs-6 d-block">07 - 製作互動場景</span>
           Aquarium
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          簡易的製作一個水族箱，初始畫面只會有一隻魚，<br>
-          可通過滑鼠點擊的方式餵給食物，當魚吃到飼料後身體會逐漸變大，<br>
-          最後到達某程度大小時會生出新的小魚並讓原先的魚恢復初始大小。
-          <br><br>
-          操作說明：<br>
-          在畫面中想生成食物的位置點擊滑鼠，即可餵給飼料，當魚游到畫面上下邊界會回彈、游到左邊界則會重新從右側游出。
-          <br><br>
-          <i class="text-muted">2023.01.05</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>簡易地製作一個水族箱，初始畫面只會有一隻魚，可透過滑鼠點擊的方式餵給食物，當魚吃到飼料後身體會逐漸變大，最後到達某程度大小時會生出新的小魚並讓原先的魚恢復初始大小。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>在畫面中想生成食物的位置點擊滑鼠，即可餵給飼料，當魚游到畫面上下邊界會回彈、游到左邊界則會重新從右側游出。</p>
+        <time class="text-muted fst-italic" datetime="2023-01-05">2023.01.05</time>
       </div>
       <div class="col-md-5">
         <a class="hover-profile" href="./aquarium">
-          <img class="img-fluid border-light border border-5" src="./images/7.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/7.png" alt="Aquarium 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-0">
+    <article class="row p-4 p-md-5 align-items-center bg-0">
       <div class="col-md-7 order-md-2">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">08 - 繪製自然感的風景或畫</span><br>
-          Mix Noise&Sin
+          <span class="text-muted fs-6 d-block">08 - 繪製自然感的風景或畫</span>
+          Mix Noise&amp;Sin
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          利用 Noise 結合 Sin 繪製出隨機移動的點，<br>
-          作品放置越久，整體會越像粉臘筆繪製出來的筆觸。
-          <br><br>
-          操作說明：<br>
-          可通過滑鼠位置控制生成的點的顏色。
-          <br><br>
-          <i class="text-muted">2023.01.06</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>利用 Noise 結合 Sin 繪製出隨機移動的點，作品放置越久，整體會越像粉蠟筆繪製出來的筆觸。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>可透過滑鼠位置控制生成的點的顏色。</p>
+        <time class="text-muted fst-italic" datetime="2023-01-06">2023.01.06</time>
       </div>
       <div class="col-md-5 order-md-1">
         <a class="hover-profile" href="./mixnoiseandsin">
-          <img class="img-fluid border-light border border-5" src="./images/8.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/8.png" alt="Mix Noise&amp;Sin 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-255">
+    <article class="row p-4 p-md-5 align-items-center bg-255">
       <div class="col-md-7">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">09 - 製作文字藝術產生器或圖像動態詩</span><br>
+          <span class="text-muted fs-6 d-block">09 - 製作文字藝術產生器或圖像動態詩</span>
           Rotate Text By DOM
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          利用 DOM 元素獲取 input 中的文字，旋轉生成於畫面中，<br>
-          最左邊的輸入框每次按下鍵盤就觸發，中間的可輸入多個文字後點擊 submit 生成，<br>
-          右上角則有一個 reset 清空按鈕用來重置畫布。
-          <br><br>
-          操作說明：<br>
-          於左上角輸入框中鍵入文字即可旋轉生成於畫面中，於中間輸入框鍵入多個字後點擊 SUBMIT 即可旋轉生成於畫面中，右上角 RESET 可用來清空畫布。
-          <br><br>
-          <i class="text-muted">2023.01.08</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>利用 DOM 元素獲取 input 中的文字，旋轉生成於畫面中，最左邊的輸入框每次按下鍵盤就觸發，中間的可輸入多個文字後點擊 submit 生成，右上角則有一個 reset 清空按鈕用來重置畫布。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>於左上角輸入框中鍵入文字即可旋轉生成於畫面中，於中間輸入框鍵入多個字後點擊 SUBMIT 即可旋轉生成於畫面中，右上角 RESET 可用來清空畫布。</p>
+        <time class="text-muted fst-italic" datetime="2023-01-08">2023.01.08</time>
       </div>
       <div class="col-md-5">
         <a class="hover-profile" href="./rotatetextbydom">
-          <img class="img-fluid border-light border border-5" src="./images/9.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/9.png" alt="Rotate Text By DOM 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-0">
+    <article class="row p-4 p-md-5 align-items-center bg-0">
       <div class="col-md-7 order-md-2">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">10 - 製作繽紛的物理或生物模擬系統</span><br>
+          <span class="text-muted fs-6 d-block">10 - 製作繽紛的物理或生物模擬系統</span>
           Monster Hit
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          利用 class 各司其職的特性製作出類似章魚的怪物射擊遊戲，<br>
-          可以多次射擊章魚致使章魚變小最後消失、<br>
-          另可點擊左上角切換章魚型態＆新增章魚數量，<br>
-          右上角則會呈現出當前章魚的存活數量。
-          <br><br>
-          操作說明：<br>
-          滑鼠點擊可生成子彈射往滑鼠所在的方向，擊中後章魚會變小且轉為生氣模式亂跑，左上角可增加章魚數量與切換章魚的狀態。
-          <br><br>
-          <i class="text-muted">2023.01.09</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>利用 class 各司其職的特性製作出類似章魚的怪物射擊遊戲，可以多次射擊章魚致使章魚變小最後消失，另可點擊左上角切換章魚型態＆新增章魚數量，右上角則會呈現出當前章魚的存活數量。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>滑鼠點擊可生成子彈射往滑鼠所在的方向，擊中後章魚會變小且轉為生氣模式亂跑，左上角可增加章魚數量與切換章魚的狀態。</p>
+        <time class="text-muted fst-italic" datetime="2023-01-09">2023.01.09</time>
       </div>
       <div class="col-md-5 order-md-1">
         <a class="hover-profile" href="./monsterhit">
-          <img class="img-fluid border-light border border-5" src="./images/10.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/10.png" alt="Monster Hit 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-255">
+    <article class="row p-4 p-md-5 align-items-center bg-255">
       <div class="col-md-7">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">11 - 製作拼貼圖片跟充滿音效的遊樂場</span><br>
+          <span class="text-muted fs-6 d-block">11 - 製作拼貼圖片跟充滿音效的遊樂場</span>
           Jumping Stars With Sound
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          結合鍵盤事件與聲音，製作出簡易的彈琴遊戲，<br>
-          每成功發出三次聲音畫面就會生成一個星星並同時加快新圓圈往下移動的速度，<br>
-          快來挑戰看看能不能成功彈完一首小星星吧！
-          <br><br>
-          操作說明：<br>
-          按下鍵盤數字 1~6 可彈鋼琴，如果失敗可於畫面任意處點擊滑鼠鍵重新開始。
-          <br><br>
-          <i class="text-muted">2023.01.10</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>結合鍵盤事件與聲音，製作出簡易的彈琴遊戲，每成功發出三次聲音畫面就會生成一個星星並同時加快新圓圈往下移動的速度，快來挑戰看看能不能成功彈完一首小星星吧！</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>按下鍵盤數字 1~6 可彈鋼琴，如果失敗可於畫面任意處點擊滑鼠鍵重新開始。</p>
+        <time class="text-muted fst-italic" datetime="2023-01-10">2023.01.10</time>
       </div>
       <div class="col-md-5">
         <a class="hover-profile" href="./jumpingstarswithsound">
-          <img class="img-fluid border-light border border-5" src="./images/11.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/11.png" alt="Jumping Stars With Sound 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-0">
+    <article class="row p-4 p-md-5 align-items-center bg-0">
       <div class="col-md-7 order-md-2">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">12 - 利用即時影音轉變為抽象畫</span><br>
-          Sound&Tracking Bacteria
+          <span class="text-muted fs-6 d-block">12 - 利用即時影音轉變為抽象畫</span>
+          Sound&amp;Tracking Bacteria
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          利用麥克風監聽聲音頻率，結合視訊鏡頭引入 tracking.js 辨識黃色物體，<br>
-          再將黃色物體轉換為十字瞄準標誌，製作出消滅細菌的小遊戲。
-          <br><br>
-          操作說明：<br>
-          發出噪音可生成細菌，使用黃色物體對著視訊鏡頭移動，瞄準細菌即可將細菌消滅。
-          <br><br>
-          <i class="text-muted">2023.01.16</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>利用麥克風監聽聲音頻率，結合視訊鏡頭引入 tracking.js 辨識黃色物體，再將黃色物體轉換為十字瞄準標誌，製作出消滅細菌的小遊戲。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>發出噪音可生成細菌，使用黃色物體對著視訊鏡頭移動，瞄準細菌即可將細菌消滅。</p>
+        <time class="text-muted fst-italic" datetime="2023-01-16">2023.01.16</time>
       </div>
       <div class="col-md-5 order-md-1">
         <a class="hover-profile" href="./soundandtrackingbacteria">
-          <img class="img-fluid border-light border border-5" src="./images/12.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/12.png" alt="Sound&amp;Tracking Bacteria 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="row p-4 p-md-5 align-items-center bg-255">
+    <article class="row p-4 p-md-5 align-items-center bg-255">
       <div class="col-md-7">
         <h2 class="fs-3 mb-3">
-          <span class="text-muted fs-6">13 - 使用資料視覺化手法製作動態</span><br>
-          Marriages&Divorces
+          <span class="text-muted fs-6 d-block">13 - 使用資料視覺化手法製作動態</span>
+          Marriages&amp;Divorces
         </h2>
-        <p class="fs-6">
-          作品概述：<br>
-          使用政府提供的資料，列出婚姻狀況並繪製男女統計數據。
-          <br><br>
-          操作說明：<br>
-          該作無互動效果。
-          <br><br>
-          <i class="text-muted">2023.02.01</i>
-        </p>
+        <h3 class="fs-6 fw-bold mb-1">作品概述</h3>
+        <p>使用政府提供的資料，列出婚姻狀況並繪製男女統計數據。</p>
+        <h3 class="fs-6 fw-bold mb-1">操作說明</h3>
+        <p>該作無互動效果。</p>
+        <time class="text-muted fst-italic" datetime="2023-02-01">2023.02.01</time>
       </div>
       <div class="col-md-5">
         <a class="hover-profile" href="./marriagesanddivorces">
-          <img class="img-fluid border-light border border-5" src="./images/13.png" alt="">
+          <img class="img-fluid border-light border border-5" src="./images/13.png" alt="Marriages&amp;Divorces 作品截圖" loading="lazy" decoding="async">
         </a>
       </div>
-    </div>
+    </article>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.min.js"></script>
   <script>
-    function setup() {
-      const canvas = createCanvas(windowWidth, windowHeight);
-      canvas.position(0, 0);
-      canvas.style('z-index', '-1');
+    let arr = [], s
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-      background(0);
-      if (windowWidth > 700) {
-        s = 20
-      } else {
-        s = 10
-      }
+    function setup() {
+      createCanvas(windowWidth, windowHeight)
+      background(0)
+      colorMode(HSB)
+      s = windowWidth > 700 ? 20 : 10
       for (let x = 0; x < width; x += width / s) {
         for (let y = 0; y < height; y += width / s) {
-          arr.push({
-            x: x,
-            y: y
-          })
+          arr.push({ x, y })
         }
       }
-
+      if (reduceMotion) frameRate(10)
     }
-    let arr = [], s
+
     function draw() {
-      background(0, 0.01);
-      colorMode(HSB)
+      background(0, 0.01)
+      noStroke()
       for (let i = 0; i < arr.length; i++) {
-        let p = arr[i]
+        const p = arr[i]
         fill(noise(p.x / 300, p.y / 300) * 360, 80, 80)
-        noStroke()
-        circle(p.x, p.y, 1);
+        circle(p.x, p.y, 1)
         p.x += noise(p.x / 200, p.y / 200, 100) - 0.5
         p.y += noise(p.x / 200, p.y / 200, 10000) - 0.5
       }
     }
+
     function windowResized() {
-      resizeCanvas(windowWidth, windowHeight);
+      resizeCanvas(windowWidth, windowHeight)
     }
 
-    new p5();
+    // 分頁不可見時暫停動畫，省電
+    document.addEventListener('visibilitychange', () => {
+      document.hidden ? noLoop() : loop()
+    })
+
+    new p5()
   </script>
 </body>
 
